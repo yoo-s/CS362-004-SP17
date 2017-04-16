@@ -669,7 +669,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card ) 
     {
     case adventurer:
-      adventurer(state, drawntreasure, currentPlayer, cardDrawn, temphand, z);
+      useAdventurer(state, drawntreasure, currentPlayer, cardDrawn, temphand, z);
 			
     case council_room:
       //+4 Cards
@@ -813,10 +813,10 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 		
     case smithy:
-      smithy(state, i, currentPlayer, handPos);
+      useSmithy(state, i, currentPlayer, handPos);
 		
     case village:
-      village(state, currentPlayer, handPos);
+      useVillage(state, currentPlayer, handPos);
 		
     case baron:
       state->numBuys++;//Increase buys by 1!
@@ -932,7 +932,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 		
     case steward:
-      steward(state, choice1, choice2, choice3, currentPlayer, handPos);
+      useSteward(state, choice1, choice2, choice3, currentPlayer, handPos);
 		
     case tribute:
       if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1){
@@ -1112,7 +1112,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 		
     case salvager:
-      salvager(state, choice1, currentPlayer, handPos);
+      useSalvager(state, choice1, currentPlayer, handPos);
 		
     case sea_hag:
       for (i = 0; i < state->numPlayers; i++){
@@ -1264,18 +1264,18 @@ int updateCoins(int player, struct gameState *state, int bonus)
 }
 
 
-smithy(struct gameState *state, int i, int currentPlayer, int handPos) {
-  //+3 Cards
-  for (i = 0; i < 3; i++) {
-    drawCard(currentPlayer, state);
-  } 
-  //discard card from hand
-  discardCard(handPos, currentPlayer, state, 0);
-  return 0;
+int useSmithy(struct gameState *state, int i, int currentPlayer, int handPos) {
+    //+3 Cards
+    for (i = 0; i < 3; i++) {
+        drawCard(currentPlayer, state);
+    } 
+    //discard card from hand
+    discardCard(handPos, currentPlayer, state, 0);
+    return 0;
 }
 
 
-adventurer(struct gameState *state, int drawntreasure, int currentPlayer, int cardDrawn, int temphand[MAX_HAND], int tmpCounter) {
+int useAdventurer(struct gameState *state, int drawntreasure, int currentPlayer, int cardDrawn, int temphand[MAX_HAND], int tmpCounter) {
   while(drawntreasure<2) {
     if (state->deckCount[currentPlayer] <1) { //if the deck is empty we need to shuffle discard and add to deck
       shuffle(currentPlayer, state);
@@ -1285,20 +1285,20 @@ adventurer(struct gameState *state, int drawntreasure, int currentPlayer, int ca
     if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
       drawntreasure++;
     else {
-      temphand[z]=cardDrawn;
+      temphand[tmpCounter]=cardDrawn;
       state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
-      z++;
+      tmpCounter++;
     }
   }
-  while(z-1>=0) {
-    state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[z-1]; // discard all cards in play that have been drawn
-    z=z-1;
+  while(tmpCounter-1>=0) {
+    state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[tmpCounter-1]; // discard all cards in play that have been drawn
+    tmpCounter=tmpCounter-1;
   }
   return 0;
 }
 
 
-village(struct gameState *state, int currentPlayer, int handPos) {
+int useVillage(struct gameState *state, int currentPlayer, int handPos) {
   //+1 Card
   drawCard(currentPlayer, state);
     
@@ -1311,7 +1311,7 @@ village(struct gameState *state, int currentPlayer, int handPos) {
 }
 
 
-steward(struct gameState *state, int choice1, int choice2, int choice3, int currentPlayer, int handPos) {
+int useSteward(struct gameState *state, int choice1, int choice2, int choice3, int currentPlayer, int handPos) {
   if (choice1 == 1) {
     //+2 cards
     drawCard(currentPlayer, state);
@@ -1331,7 +1331,7 @@ steward(struct gameState *state, int choice1, int choice2, int choice3, int curr
 }
 
 
-salvager(struct gameState *state, int choice1, int currentPlayer, int handPos) {
+int useSalvager(struct gameState *state, int choice1, int currentPlayer, int handPos) {
   //+1 buy
   state->numBuys++;
       
