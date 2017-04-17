@@ -1266,9 +1266,9 @@ int updateCoins(int player, struct gameState *state, int bonus)
 
 int useSmithy(struct gameState *state, int i, int currentPlayer, int handPos) {
     //+3 Cards
-    for (i = 0; i < 3; i++) {
+    for (i = 0; i < 4; i++) { // BUG: changed 3 to 4
         drawCard(currentPlayer, state);
-    } 
+    }
     //discard card from hand
     discardCard(handPos, currentPlayer, state, 0);
     return 0;
@@ -1276,7 +1276,7 @@ int useSmithy(struct gameState *state, int i, int currentPlayer, int handPos) {
 
 
 int useAdventurer(struct gameState *state, int drawntreasure, int currentPlayer, int cardDrawn, int temphand[MAX_HAND], int tmpCounter) {
-  while(drawntreasure<2) {
+  while(drawntreasure<5) { // BUG: keep drawing cards until you have 5 treasure cards instead of 2
     if (state->deckCount[currentPlayer] <1) { //if the deck is empty we need to shuffle discard and add to deck
       shuffle(currentPlayer, state);
     }
@@ -1300,10 +1300,11 @@ int useAdventurer(struct gameState *state, int drawntreasure, int currentPlayer,
 
 int useVillage(struct gameState *state, int currentPlayer, int handPos) {
   //+1 Card
+  drawCard(currentPlayer, state); // BUG: draw 2 cards from deck instead of 1
   drawCard(currentPlayer, state);
     
   //+2 Actions
-  state->numActions = state->numActions + 2;
+  state->numActions = state->numActions + 1; // BUG: +1 action instead of 2
 
   //discard played card from hand
   discardCard(handPos, currentPlayer, state, 0);
@@ -1314,15 +1315,15 @@ int useVillage(struct gameState *state, int currentPlayer, int handPos) {
 int useSteward(struct gameState *state, int choice1, int choice2, int choice3, int currentPlayer, int handPos) {
   if (choice1 == 1) {
     //+2 cards
+    drawCard(currentPlayer, state); // BUG: draw 3 cards instead of 2
     drawCard(currentPlayer, state);
     drawCard(currentPlayer, state);
   } else if (choice1 == 2) {
     //+2 coins
-    state->coins = state->coins + 2;
+    state->coins = state->coins + 4; // BUG: +4 coins instead of 2
   } else {
     //trash 2 cards in hand
-    discardCard(choice2, currentPlayer, state, 1);
-    discardCard(choice3, currentPlayer, state, 1);
+    discardCard(choice2, currentPlayer, state, 1); // BUG: trash only 1 card instead of 2
   }
       
   //discard card from hand
