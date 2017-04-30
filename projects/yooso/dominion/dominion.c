@@ -870,15 +870,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 		
     case great_hall:
-      //+1 Card
-      drawCard(currentPlayer, state);
-			
-      //+1 Actions
-      state->numActions++;
-			
-      //discard card from hand
-      discardCard(handPos, currentPlayer, state, 0);
-      return 0;
+      useGreat_Hall(state, currentPlayer, handPos);
 		
     case minion:
       //+1 action
@@ -1276,7 +1268,7 @@ int useSmithy(struct gameState *state, int i, int currentPlayer, int handPos) {
 
 
 int useAdventurer(struct gameState *state, int drawntreasure, int currentPlayer, int cardDrawn, int temphand[MAX_HAND], int tmpCounter) {
-  while(drawntreasure<5) { // BUG: keep drawing cards until you have 5 treasure cards instead of 2
+  while(drawntreasure<3) { // BUG: keep drawing cards until you have 3 treasure cards instead of 2
     if (state->deckCount[currentPlayer] <1) { //if the deck is empty we need to shuffle discard and add to deck
       shuffle(currentPlayer, state);
     }
@@ -1311,6 +1303,17 @@ int useVillage(struct gameState *state, int currentPlayer, int handPos) {
   return 0;
 }
 
+int useGreat_Hall(struct gameState *state, int currentPlayer, int handPos) {
+  //+1 Card
+  drawCard(currentPlayer, state);
+  
+  //+1 Actions
+  state->numActions++;
+  
+  //discard card from hand
+  discardCard(handPos, currentPlayer, state, 0);
+  return 0;
+}
 
 int useSteward(struct gameState *state, int choice1, int choice2, int choice3, int currentPlayer, int handPos) {
   if (choice1 == 1) {

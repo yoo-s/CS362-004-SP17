@@ -15,6 +15,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3,
 int useSmithy(struct gameState *state, int i, int currentPlayer, int handPos);
 int useAdventurer(struct gameState *state, int drawntreasure, int currentPlayer, int cardDrawn, int temphand[MAX_HAND], int tmpCounter);
 int useVillage(struct gameState *state, int currentPlayer, int handPos);
+int useGreat_Hall(struct gameState *state, int currentPlayer, int handPos);
 int useSteward(struct gameState *state, int choice1, int choice2, int choice3, int currentPlayer, int handPos);
 int useSalvager(struct gameState *state, int choice1, int currentPlayer, int handPos);
 
