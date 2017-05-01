@@ -20,15 +20,12 @@
 #define ASSERT(condition) ((!(condition)) ? (printf("Test failed.\n"), failed++) : printf("Test passed.\n"))
 
 int main() {
-    int i;
     int seed = 1000;
     int numPlayer = 2;
     int failed = 0;
-    int maxBonus = 10;
     int p1 = 0; int p2 = 1;
     int r, gain;
     int card = adventurer;
-    int bonus;
     int k[10] = {adventurer, council_room, feast, gardens, mine
                , remodel, smithy, village, baron, great_hall};
     struct gameState G;
