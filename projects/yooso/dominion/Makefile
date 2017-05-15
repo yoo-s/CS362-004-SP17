@@ -29,8 +29,25 @@ runtests: testDrawCard
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
-unittestresults.out: unittest1.c unittest2.c unittest3.c unittest4.c cardtest1.c cardtest2.c cardtest3.c cardtest4.c dominion.c rngs.c
-	echo "Result for running unit tests:\n" >  unittestresults.out
+unittestresults.out: unittest1.c unittest2.c unittest3.c unittest4.c cardtest1.c cardtest2.c cardtest3.c cardtest4.c randomtestadventurer.c randomtestcard1.c randomtestcard2.c dominion.c rngs.c
+	echo "Result for running random tests:\n" >  unittestresults.out
+
+	echo "randomtestadventurer.c:" >>  unittestresults.out
+	gcc -o randomtestadventurer -g randomtestadventurer.c dominion.c rngs.c $(CFLAGS)
+	randomtestadventurer >>  unittestresults.out
+	gcov -b -f dominion.c >>  unittestresults.out
+
+	echo "randomtestcard1.c:" >>  unittestresults.out
+	gcc -o randomtestcard1 -g randomtestcard1.c dominion.c rngs.c $(CFLAGS)
+	randomtestcard1 >>  unittestresults.out
+	gcov -b -f dominion.c >>  unittestresults.out
+
+	echo "randomtestcard2.c:" >>  unittestresults.out
+	gcc -o randomtestcard2 -g randomtestcard2.c dominion.c rngs.c $(CFLAGS)
+	randomtestcard2 >>  unittestresults.out
+	gcov -b -f dominion.c >>  unittestresults.out
+
+	#echo "Result for running unit tests:\n" >  unittestresults.out
 
 	echo "unittest1.c:" >>  unittestresults.out
 	gcc -o unittest1 -g unittest1.c dominion.c rngs.c $(CFLAGS)
