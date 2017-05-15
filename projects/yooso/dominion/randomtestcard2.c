@@ -130,7 +130,7 @@ int main() {
 #endif
 
 #if (NOISY_TEST == 1)
-		printf("\nTest that player gains +1 cards and +1 action that come from own pile:\n");
+		printf("\nTest that player gains +3 cards that come from own pile:\n");
 		printf("Test game's hand count = %d, expected = %d\n", testG.handCount[p], G.handCount[p] + newCards - discarded);
 		printf("Test game's deck count = %d, expected = %d\n", testG.deckCount[p], G.deckCount[p] - newCards + shuffledCards);
 #endif
