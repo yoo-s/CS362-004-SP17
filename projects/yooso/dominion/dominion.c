@@ -1306,7 +1306,7 @@ int useVillage(struct gameState *state, int currentPlayer, int handPos) {
 int useGreat_Hall(struct gameState *state, int currentPlayer, int handPos) {
   //+1 Card
   drawCard(currentPlayer, state);
-  
+
   //+1 Actions
   state->numActions++;
   
