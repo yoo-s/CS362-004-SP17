@@ -1,1 +1,102 @@
-Hello
+Title: Incorrect player deck count when playing Adventurer card
+
+Class: Serious Bug
+
+Date: 05/28/2017
+
+Reported By: Soo-Min Yoo
+
+Email: yooso@oregonstate.edu 
+
+Product: Dominion/Adventurer        Version:
+
+Platform: C                                       Version:
+
+Browser:                                           Version:
+
+URL:        
+
+Is it reproducible: Yes
+
+Description
+===========
+Current player’s deck count after playing the adventurer card does not equal the original deck count minus the cards drawn into the player’s hand.
+
+Steps to Produce/Reproduce
+--------------------------
+Run randomtestadventurer, and see that the current player’s deck count’s value is not the expected value (deck count before playing card minus cards drawn) for each test that is run.
+
+Expected Results
+----------------
+Player’s deck count should equal the original game state’s deck count minus the number of cards drawn into the current player’s hand. testG.deckCount[p1] should equal G.deckCount[p] - newCards + shuffledCards.
+
+Actual Results
+--------------
+Player’s deck count does not equal the original game state’s deck count minus the number of cards drawn into the current player’s hand.
+
+Workarounds
+-----------
+None
+
+Attachments
+-----------
+None
+
+Other Information
+-----------------
+None
+
+
+
+
+Title: Card can be gained from empty supply pile in gainCard() function
+
+Class: Serious Bug
+
+Date: 05/28/2017
+
+Reported By: Soo-Min Yoo
+
+Email: yooso@oregonstate.edu 
+
+Product: Dominion/gainCard()         Version:
+
+Platform: C                                       Version:
+
+Browser:                                           Version:
+
+URL:        
+
+Is it reproducible: Yes
+
+Description
+===========
+The gainCard() function draws cards from empty supply piles when it shouldn’t.
+
+Steps to Produce/Reproduce
+--------------------------
+Run unittest4, and see that calling gainCard() on a card after setting the game state’s supplyCount of that card to 0 results in a return value of 0 instead of -1, meaning it succeeded instead of failed.
+
+Expected Results
+----------------
+Test that card cannot be gained from empty supply pile:
+gain = -1, expected = -1
+
+Actual Results
+--------------
+Test that card cannot be gained from empty supply pile:
+gain = 0, expected = -1
+
+Workarounds
+-----------
+None
+
+Attachments
+-----------
+None
+
+Other Information
+-----------------
+None
+
+
